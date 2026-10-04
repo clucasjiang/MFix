@@ -1,0 +1,52 @@
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Device-specific calibration and runtime output
+calibration*.json
+aim_log.csv
+*.log
+snapshots/
+data/*
+!data/.gitkeep
+tests/test-artifacts-*/
+
+# Firmware builds and editor metadata
+.pio/
+.vscode/
+.idea/
+build/
+dist/
+
+# Archives and operating-system metadata
+*.zip
+*.7z
+*.tar
+*.gz
+Thumbs.db
+.DS_Store
+
+# Additional generated artifacts and local credentials
+.cache/
+htmlcov/
+.coverage*
+*.pyo
+*.bak
+*.tmp
+*.sqlite*
+*.db
+credentials*.json
+secrets*.json

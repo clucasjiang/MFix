@@ -1,0 +1,8 @@
+httpx>=0.28,<1
+elevenlabs>=2.70,<3
+pydantic>=2.10,<3
+Pillow>=12,<13
+imageio-ffmpeg==0.6.0
+sounddevice>=0.5,<1
+numpy>=1.26,<3
+python-dotenv>=1,<2
