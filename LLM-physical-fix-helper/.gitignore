@@ -4,4 +4,3 @@ __pycache__/
 *.pyc
 data/*
 !data/.gitkeep
-tests/test-artifacts-*/

@@ -153,13 +153,11 @@ the turn waits for playback completion, and interruption stops playback.
 
 ## Camera and coordinates
 
-`src/camera_capture.py` reuses the supplied
-`../MHack-Windows/MHack/src/camera_capture.py` capture implementation:
-Windows DirectShow/FFmpeg capture, exposure settling, bounded capture, and atomic
-publication. Camera name and resolution are now configurable. The original
+`src/camera_capture.py` is adapted from the capture code of an earlier team
+prototype: Windows DirectShow/FFmpeg capture, exposure settling, bounded capture,
+and atomic publication. Camera name and resolution are configurable. The original
 UGREEN 1080p/MJPEG settings remain available; other cameras negotiate their input
-format. Grid generation/metadata were removed.
-The copied program makes this repository independent of its sibling folder.
+format.
 
 The processed input remains a clean image. Image dimensions come from the saved
 file that is sent to the model, including fixtures at arbitrary resolutions. Each
@@ -285,28 +283,11 @@ the model does not assume a previous instruction or movement succeeded.
 
 ## Verification
 
-```powershell
-python -m unittest discover -s tests -v
-```
-
-Tests use fixture images, mocked provider responses, and controlled completion
-events; no credentials, microphone, camera, network calls, or hardware are needed.
-They cover concurrency, busy key rejection, coordinate forwarding/validation,
-independent debug images, completion ordering, interruption, timeout recovery,
-session reset, and Responses API request/state construction.
-`tests/test_rig.py` adds 10 tests for the laser rig adapter, including full turns
-against the simulated rig (about 30 s): a clean laser-off photo, a valid aim, a
-hidden dot reported as predicted, and an unreachable box that does not lock.
-
 Live camera/audio/model grounding and the physical adapter must be tested on your
-actual devices. The old build-plan file is historical; this README and the current
-implementation use clean images, pixel boxes, and an external pointer boundary.
+actual devices. `--rig-sim` exercises the full turn against the simulated rig
+without a camera or gimbal (model and ElevenLabs keys are still required).
 
-The expanded 60-test offline suite passes, covering provider/key selection,
-history image omission, encrypted-output preservation, provider-specific stored
-state, rejected cross-provider state, UI switching, timing display, verified key
-migration, restart persistence, failed saves, and secure model/voice-key UI saving. These tests
-mock all network and hardware operations. Live OpenAI smoke checks on a generated
+Live OpenAI smoke checks on a generated
 red/blue image confirmed authentication, structured replies and a two-turn client
 conversation (about 3.8s and 2.6s for those simple requests, search off). Those
 timings are not a repair-board benchmark or a Grok comparison. A third request

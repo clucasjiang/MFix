@@ -1,9 +1,7 @@
 # Helper: initialization and development guide for AI agents
 
-This repository is the Windows desktop repair helper. Read this file first, then
-README.md for detailed behavior. The older `MHacks 2026 AI Guided Pointer Build Plan.md`
-is historical; current source and README describe the implemented application.
-Sibling Li/MHack projects have different camera and coordinate behavior.
+This folder is the Windows desktop repair helper, the voice assistant half of
+MFix. Read this file first, then README.md for detailed behavior.
 
 ## 1. Initialize the Python runtime
 
@@ -79,7 +77,6 @@ idle. Do not silently replace a disconnected selection with another device.
   negotiates its input format. Choose only a fixed resolution that device supports.
 - A 720p webcam cannot open a forced 1080p mode. Use Auto or 1280x720. On failure,
   check the selected device/mode, other apps using it, and Windows camera permissions.
-  Do not assume Li's mode probing or padded canvas is implemented in helper.
 - Camera/microphone/voice selections made in the sidebar apply to the current
   process. For reproducible startup, pass CLI device options; do not assume those
   selections persist in `.env`.
@@ -130,14 +127,13 @@ or use UI preview coordinates as camera coordinates.
 ## 5. Validate initialization without spending API credits
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests
 .\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m src.main --help
 ```
 
-Tests use dummy keys, fixture images, mock provider responses, and simulated
-hardware; they do not call paid endpoints or move a physical pointer. Native
-credential checks should use a separate temporary namespace and remove only the
-test entry afterward. Never enumerate, delete, or overwrite unrelated credentials.
+These checks do not call paid endpoints or move a physical pointer. Native
+credential checks should use a separate temporary namespace and remove only that
+entry afterward. Never enumerate, delete, or overwrite unrelated credentials.
 
 For an explicitly requested live image/model check without a microphone, speech
 playback, or physical pointing:
@@ -148,7 +144,7 @@ playback, or physical pointing:
 
 That command **calls the selected model API**. It avoids live camera access but
 still uploads the fixture. Report live hardware/API results separately from
-offline tests; do not claim real-board accuracy from synthetic examples.
+offline checks; do not claim real-board accuracy from synthetic examples.
 
 ## 6. Preserve runtime invariants during changes
 
@@ -160,7 +156,7 @@ start a new session so encrypted output and response IDs cannot be mixed.
 Client state defaults to the latest image plus prior text/full provider outputs;
 historical coordinates are not evidence of the current scene.
 
-Keep `.env`, `.venv`, captured images/audio in `data/`, and temporary
-`tests/test-artifacts-*` out of Git. Preserve existing user files and configuration.
+Keep `.env`, `.venv`, and captured images/audio in `data/` out of Git. Preserve
+existing user files and configuration.
 Explain repairs plainly, distinguish observations from hypotheses, and never
 infer a hidden electrical fault from appearance alone.

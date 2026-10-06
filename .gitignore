@@ -22,7 +22,6 @@ aim_log.csv
 snapshots/
 data/*
 !data/.gitkeep
-tests/test-artifacts-*/
 
 # Firmware builds and editor metadata
 .pio/
